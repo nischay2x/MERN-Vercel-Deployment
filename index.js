@@ -11,11 +11,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "./frontend/build")));
 
-app.get("/api/test", (req, res) => {
+const originBlock = (req, res, next) => {
+  if(!req.headers.origin || req.headers.origin !== "https://mern-vercel-deployment.vercel.app") return res.sendStatus(406)
+  next();
+}
+
+app.get("/api/test", originBlock, (req, res) => {
   res.send("test");
 });
 
-app.post("/api/test", (req, res) => {
+app.post("/api/test", originBlock, (req, res) => {
   res.json({...req.body});
 });
 
