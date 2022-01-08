@@ -8,11 +8,7 @@ const cors = require("cors");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cors());
 
-app.get("/api/test", (req, res) => {
-  res.send("test");
-});
 
 app.use(express.static(path.join(__dirname, "./frontend/build")));
 
@@ -26,6 +22,15 @@ app.get("*", function (_, res) {
     }
   );
 });
+
+app.use(cors({
+  origin : "https://mern-vercel-deployment.vercel.app"
+}));
+
+app.get("/api/test", (req, res) => {
+  res.send("test");
+});
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server Running on port ${port}`));
