@@ -3,7 +3,6 @@ const app = express();
 
 const path = require("path");
 const logger = require("morgan");
-const cors = require("cors");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -11,6 +10,14 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use(express.static(path.join(__dirname, "./frontend/build")));
+
+app.get("/api/test", (req, res) => {
+  res.send("test");
+});
+
+app.post("/api/test", (req, res) => {
+  res.json({...req.body});
+});
 
 app.get("*", function (_, res) {
   res.sendFile(
@@ -23,17 +30,7 @@ app.get("*", function (_, res) {
   );
 });
 
-app.get("/api/test", cors({
-  origin : "https://mern-vercel-deployment.vercel.app"
-}), (req, res) => {
-  res.send("test");
-});
 
-app.post("/api/test", cors({
-  origin : "https://mern-vercel-deployment.vercel.app"
-}), (req, res) => {
-  res.json({...req.body});
-});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server Running on port ${port}`));
