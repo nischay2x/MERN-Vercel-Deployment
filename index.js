@@ -3,7 +3,7 @@ const app = express();
 
 const path = require("path");
 const logger = require("morgan");
-// const cors = require("cors");
+const cors = require("cors");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -23,15 +23,15 @@ app.get("*", function (_, res) {
   );
 });
 
-// app.use(cors({
-//  origin : "https://mern-vercel-deployment.vercel.app"
-// }));
-
-app.get("/api/test", (req, res) => {
+app.get("/api/test", cors({
+  origin : "https://mern-vercel-deployment.vercel.app"
+}), (req, res) => {
   res.send("test");
 });
 
-app.post("/api/test", (req, res) => {
+app.post("/api/test", cors({
+  origin : "https://mern-vercel-deployment.vercel.app"
+}), (req, res) => {
   res.json({...req.body});
 });
 
