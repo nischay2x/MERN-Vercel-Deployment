@@ -8,7 +8,7 @@ const cors = require("cors");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+// app.use(cors());
 
 app.get("/api/test", (req, res) => {
   res.send("test");
